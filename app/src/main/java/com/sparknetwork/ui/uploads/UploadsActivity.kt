@@ -1,14 +1,14 @@
-package com.sparknetwork
+package com.sparknetwork.ui.uploads
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.sparknetwork.ui.imageList.UploadImageFragment
+import com.sparknetwork.R
 
-class MainActivity : AppCompatActivity() {
+class UploadsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_upload_images)
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.frame, UploadImageFragment.newInstance())

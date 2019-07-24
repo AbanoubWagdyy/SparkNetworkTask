@@ -1,4 +1,4 @@
-package com.sparknetwork.ui.adapter
+package com.sparknetwork.ui.uploads.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,13 +7,13 @@ import android.widget.TextView
 
 import androidx.recyclerview.widget.RecyclerView
 import com.sparknetwork.R
-import com.sparknetwork.model.ImageModel
+import com.sparknetwork.model.DataModel
 
-class ImagesAdapter(private val moviesList: List<ImageModel.DataModel>) :
+class ImagesAdapter(private val imagesList: List<DataModel>) :
     RecyclerView.Adapter<ImagesAdapter.MyViewHolder>() {
 
     inner class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        var image: TextView = view.findViewById(R.id.image)
+        var image: TextView = view.findViewById(R.id.iv)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -23,10 +23,10 @@ class ImagesAdapter(private val moviesList: List<ImageModel.DataModel>) :
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val (name) = moviesList[position]
+
     }
 
     override fun getItemCount(): Int {
-        return moviesList.size
+        return imagesList.size
     }
 }
