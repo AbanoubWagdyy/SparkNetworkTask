@@ -1,19 +1,22 @@
 package com.sparknetwork.ui.uploads.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 
 import androidx.recyclerview.widget.RecyclerView
-import com.sparknetwork.R
-import com.sparknetwork.model.DataModel
+import com.bumptech.glide.Glide
+import com.sparknetwork.android.R
+import com.sparknetwork.model.ImageModel
 
-class ImagesAdapter(private val imagesList: List<DataModel>) :
+class ImagesAdapter(private val mContext: Context?, private val imagesList: List<ImageModel>) :
     RecyclerView.Adapter<ImagesAdapter.MyViewHolder>() {
 
     inner class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        var image: TextView = view.findViewById(R.id.iv)
+        var image: ImageView = view.findViewById(R.id.iv)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -23,7 +26,13 @@ class ImagesAdapter(private val imagesList: List<DataModel>) :
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-
+        val model = imagesList[position]
+        Glide
+            .with(mContext!!)
+            .load(model.url)
+            .override(200, 200)
+            .centerCrop()
+            .into(holder.image)
     }
 
     override fun getItemCount(): Int {
