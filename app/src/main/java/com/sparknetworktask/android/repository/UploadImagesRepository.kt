@@ -18,13 +18,13 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.UploadTask
 import com.sparknetworktask.android.model.ImageModel
-import com.sparknetworktask.android.model.Status
 import java.util.*
+import com.google.android.gms.tasks.OnCompleteListener
+import com.sparknetworktask.android.model.Status
 
 
 class UploadImagesRepository(val mContext: Context) {
 
-    private lateinit var uuid: String
     private lateinit var uploadProgressLiveData: MutableLiveData<UploadProgress>
     private lateinit var imagesLiveData: MutableLiveData<List<ImageModel>>
 
@@ -40,59 +40,32 @@ class UploadImagesRepository(val mContext: Context) {
 
         uploadProgressLiveData = MutableLiveData()
 
-        uuid = UUID.randomUUID().toString()
+        val uniqueId = UUID.randomUUID().toString()
+        val ur_firebase_reference = mStorageReference!!.child("uploads/$uniqueId")
 
-        FirebaseStorage.getInstance().maxUploadRetryTimeMillis = 2000
+        val uploadTask = ur_firebase_reference.putFile(uri)
 
-        mStorageReference = FirebaseStorage.getInstance().reference
+        uploadProgressLiveData.value = UploadProgress(0, Status.PROGRESS)
 
-        mDatabase = FirebaseDatabase.getInstance().getReference(Constants.DATABASE_PATH_UPLOADS);
-
-        uuid = UUID.randomUUID().toString()
-
-        val sRef = mStorageReference!!.child(
-            Constants.STORAGE_PATH_UPLOADS + uuid
-        )
-
-        var activeUploadTasks = sRef.activeUploadTasks
-
-        for (task in activeUploadTasks) {
-            task.cancel()
-        }
-
-        val uploadTask = sRef.putFile(uri)
-
-        uploadTask
-            .addOnSuccessListener { taskSnapshot ->
-                val ref = mStorageReference!!.child("{${Constants.STORAGE_PATH_UPLOADS}}/$uuid")
-                uploadTask.continueWithTask(Continuation<UploadTask.TaskSnapshot,
-                        Task<Uri>> { task ->
-                    if (!task.isSuccessful) {
-                        task.exception?.let {
-                            throw it
-                        }
-                    }
-                    return@Continuation ref.downloadUrl
-                }).addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        val upload =
-                            ImageModel(uuid, task.result.toString())
-
-                        val uploadId = mDatabase!!.push().key
-                        mDatabase!!.child(uploadId!!).setValue(upload)
-                        uploadProgressLiveData.value = UploadProgress(0, Status.SUCCESS)
-                    } else {
-                        uploadProgressLiveData.value = UploadProgress(0, Status.FAILURE)
-                    }
+        uploadTask.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
+            if (!task.isSuccessful) {
+                throw task.exception!!
+            }
+            uploadProgressLiveData.value = UploadProgress(50, Status.PROGRESS)
+            ur_firebase_reference.downloadUrl
+        })
+            .addOnCompleteListener(OnCompleteListener<Uri> { task ->
+                if (task.isSuccessful) {
+                    val downloadUri = task.result
+                    val upload =
+                        ImageModel(uniqueId, downloadUri.toString())
+                    val uploadId = mDatabase!!.push().key
+                    mDatabase!!.child(uploadId!!).setValue(upload)
+                    uploadProgressLiveData.value = UploadProgress(0, Status.SUCCESS)
+                } else {
+                    uploadProgressLiveData.value = UploadProgress(0, Status.FAILURE)
                 }
-            }
-            .addOnProgressListener { taskSnapshot ->
-                val progress = 100.0 * taskSnapshot.bytesTransferred / taskSnapshot.totalByteCount
-                uploadProgressLiveData.value = UploadProgress(progress.toInt(), Status.PROGRESS)
-            }
-            .addOnFailureListener {
-                uploadProgressLiveData.value = UploadProgress(0, Status.FAILURE)
-            }
+            })
 
         return uploadProgressLiveData
     }

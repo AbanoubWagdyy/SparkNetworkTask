@@ -29,8 +29,6 @@ class ImagesAdapter(private val mContext: Context?, private val imagesList: List
         Glide
             .with(mContext!!)
             .load(model.url)
-            .override(200, 200)
-            .centerCrop()
             .into(holder.image)
     }
 

@@ -19,6 +19,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.snackbar.Snackbar
 import com.sparknetworktask.android.R
+import com.sparknetworktask.android.model.BitmapModel
 import com.sparknetworktask.android.model.Status
 import com.sparknetworktask.android.model.UploadProgress
 import com.sparknetworktask.android.viewModel.UploadImagesViewModel
@@ -65,6 +66,11 @@ class ChooseAndUploadActivity : AppCompatActivity() {
 
     private fun initViewModelObserver() {
         mViewModel = ViewModelProviders.of(this).get(UploadImagesViewModel::class.java)
+        if (mViewModel.getSelectedImage() != null) {
+            val selectedImage = mViewModel.getSelectedImage()
+            ivPhoto.setImageBitmap(selectedImage!!.bitmap)
+            mCurrentFileUri = selectedImage!!.uri
+        }
     }
 
     private fun initUI() {
@@ -87,8 +93,8 @@ class ChooseAndUploadActivity : AppCompatActivity() {
                     updateProgress(uploadProgress)
                 }
 
-                mViewModel.uploadImage(mCurrentFileUri!!,getFileExtension(mCurrentFileUri!!)).observe(this, observer)
-            }else{
+                mViewModel.uploadImage(mCurrentFileUri!!, getFileExtension(mCurrentFileUri!!)).observe(this, observer)
+            } else {
                 Snackbar.make(
                     findViewById(android.R.id.content),
                     "Please choose valid image !.",
@@ -135,7 +141,6 @@ class ChooseAndUploadActivity : AppCompatActivity() {
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
         handlePermissionResult(requestCode, grantResults)
     }
 
@@ -164,6 +169,7 @@ class ChooseAndUploadActivity : AppCompatActivity() {
                 selectedImage = BitmapFactory.decodeStream(imageStream)
                 ivPhoto.visibility = View.VISIBLE
                 ivPhoto.setImageBitmap(selectedImage)
+                mViewModel.setImage(BitmapModel(selectedImage, mCurrentFileUri))
             }
         } else if (resultCode == ImagePicker.RESULT_ERROR) {
             Toast.makeText(this, ImagePicker.getError(data), Toast.LENGTH_SHORT).show()

@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.fragment_upload_image.*
 import java.util.ArrayList
 import androidx.recyclerview.widget.GridLayoutManager
 import com.sparknetworktask.android.R
+import com.sparknetworktask.android.utils.Utility
 
 
 class GalleryFragment : Fragment() {
@@ -61,7 +62,10 @@ class GalleryFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-        recyclerImages.layoutManager = GridLayoutManager(activity, 3)
+        val numberOfColumns = context?.let { Utility.calculateNoOfColumns(it, 150.0f) }
+        recyclerImages.layoutManager = context?.let {
+            numberOfColumns?.let { it1 -> GridLayoutManager(it, it1) }
+        }
         recyclerImages.setHasFixedSize(true)
         mAdapter = ImagesAdapter(context, imagesList)
         recyclerImages.adapter = mAdapter
