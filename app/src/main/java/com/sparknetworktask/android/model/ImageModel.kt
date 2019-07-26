@@ -1,4 +1,4 @@
-package com.sparknetwork.model
+package com.sparknetworktask.android.model
 
 import com.google.firebase.database.IgnoreExtraProperties
 

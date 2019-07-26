@@ -1,16 +1,15 @@
-package com.sparknetwork.ui.uploads.adapter
+package com.sparknetworktask.android.ui.uploads.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
 
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.sparknetwork.android.R
-import com.sparknetwork.model.ImageModel
+import com.sparknetworktask.android.R
+import com.sparknetworktask.android.model.ImageModel
 
 class ImagesAdapter(private val mContext: Context?, private val imagesList: List<ImageModel>) :
     RecyclerView.Adapter<ImagesAdapter.MyViewHolder>() {

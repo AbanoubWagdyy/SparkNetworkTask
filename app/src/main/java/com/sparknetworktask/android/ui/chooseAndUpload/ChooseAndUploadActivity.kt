@@ -1,4 +1,4 @@
-package com.sparknetwork.ui.chooseAndUpload
+package com.sparknetworktask.android.ui.chooseAndUpload
 
 import android.Manifest
 import android.app.Activity
@@ -14,17 +14,16 @@ import android.view.View
 import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.core.net.toUri
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.snackbar.Snackbar
-import com.sparknetwork.android.R
-import com.sparknetwork.model.Status
-import com.sparknetwork.model.UploadProgress
-import com.sparknetwork.viewModel.UploadImagesViewModel
+import com.sparknetworktask.android.R
+import com.sparknetworktask.android.model.Status
+import com.sparknetworktask.android.model.UploadProgress
+import com.sparknetworktask.android.viewModel.UploadImagesViewModel
 import kotlinx.android.synthetic.main.activity_main.*
-import com.sparknetwork.ui.uploads.GalleryActivity
+import com.sparknetworktask.android.ui.uploads.GalleryActivity
 
 class ChooseAndUploadActivity : AppCompatActivity() {
 

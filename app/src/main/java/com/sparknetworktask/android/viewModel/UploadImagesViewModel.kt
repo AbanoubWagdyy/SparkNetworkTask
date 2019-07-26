@@ -1,11 +1,11 @@
-package com.sparknetwork.viewModel
+package com.sparknetworktask.android.viewModel
 
 import android.app.Application
 import android.net.Uri
 import androidx.lifecycle.*
-import com.sparknetwork.model.ImageModel
-import com.sparknetwork.model.UploadProgress
-import com.sparknetwork.repository.UploadImagesRepository
+import com.sparknetworktask.android.model.ImageModel
+import com.sparknetworktask.android.model.UploadProgress
+import com.sparknetworktask.android.repository.UploadImagesRepository
 
 class UploadImagesViewModel(application: Application) : AndroidViewModel(application) {
 

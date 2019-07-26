@@ -1,27 +1,24 @@
-package com.sparknetwork.repository
+package com.sparknetworktask.android.repository
 
 
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import com.sparknetwork.model.Constants
+import com.sparknetworktask.android.model.Constants
 import android.content.Context
 import android.net.Uri
 import android.util.Log
-import androidx.annotation.NonNull
 import com.google.android.gms.tasks.Continuation
-import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.Task
-import com.sparknetwork.model.UploadProgress
+import com.sparknetworktask.android.model.UploadProgress
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.UploadTask
-import com.sparknetwork.model.ImageModel
-import com.sparknetwork.model.Status
-import java.lang.Exception
+import com.sparknetworktask.android.model.ImageModel
+import com.sparknetworktask.android.model.Status
 import java.util.*
 
 

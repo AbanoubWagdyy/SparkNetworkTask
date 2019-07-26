@@ -1,4 +1,4 @@
-package com.sparknetwork.ui.uploads
+package com.sparknetworktask.android.ui.uploads
 
 import androidx.lifecycle.ViewModelProviders
 
@@ -9,14 +9,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
-import com.sparknetwork.model.ImageModel
-import com.sparknetwork.ui.uploads.adapter.ImagesAdapter
-import com.sparknetwork.viewModel.UploadImagesViewModel
+import com.sparknetworktask.android.model.ImageModel
+import com.sparknetworktask.android.ui.uploads.adapter.ImagesAdapter
+import com.sparknetworktask.android.viewModel.UploadImagesViewModel
 import kotlinx.android.synthetic.main.fragment_upload_image.*
 
 import java.util.ArrayList
 import androidx.recyclerview.widget.GridLayoutManager
-import com.sparknetwork.android.R
+import com.sparknetworktask.android.R
 
 
 class GalleryFragment : Fragment() {

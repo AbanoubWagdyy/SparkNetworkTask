@@ -1,10 +1,10 @@
-package com.sparknetwork.ui.uploads
+package com.sparknetworktask.android.ui.uploads
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import com.sparknetwork.android.R
+import com.sparknetworktask.android.R
 
 class GalleryActivity : AppCompatActivity() {
 
