@@ -41,6 +41,7 @@ class UploadImagesRepository(val mContext: Context) {
         uploadProgressLiveData = MutableLiveData()
 
         val uniqueId = UUID.randomUUID().toString()
+
         val ur_firebase_reference = mStorageReference!!.child("uploads/$uniqueId")
 
         val uploadTask = ur_firebase_reference.putFile(uri)
